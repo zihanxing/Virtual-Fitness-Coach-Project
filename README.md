@@ -1,4 +1,4 @@
-# Virtual Fitness Coach Project Plan
+# Virtual Fitness Coach Project
 
 Individual Project for AIPI 561: LLMOps
 
