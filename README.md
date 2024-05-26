@@ -9,7 +9,7 @@ Individual Project for AIPI 561: LLMOps
 - Traditional fitness programs often fail to meet individual needs, leading to suboptimal results.
 
 ### Solution
-The Virtual Fitness Coach provides personalized workout plans, real-time feedback, and continuous motivation using an AI-powered assistant. This application ensures privacy and accessibility with a local, containerized LLM.
+The Virtual Fitness Coach provides personalized workout plans, real-time feedback, and continuous motivation using an AI-powered assistant.
 
 ### Benefit
 Users will enjoy tailored workouts, improved motivation, and effective progress tracking. The portable application offers consistent support and guidance, helping users achieve their fitness goals anywhere, anytime.
