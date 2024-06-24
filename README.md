@@ -42,3 +42,7 @@ Users will enjoy tailored workouts, improved motivation, and effective progress 
   - Conduct thorough testing.
   - Gather test user feedback and make improvements.
   - Ensure performance and reliability.
+
+### Structure
+
+![alt text](assets/AIPI561.png)
