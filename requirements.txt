@@ -4,4 +4,6 @@ black
 flake8
 pytest
 pytest-cov
-hadolint
+docker
+pandas
+llama_index
