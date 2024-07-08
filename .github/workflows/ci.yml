@@ -18,7 +18,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
-        python-version: '3.x' # Specify the Python version
+        python-version: '3.10' 
 
     - name: Install dependencies
       run: |
@@ -36,7 +36,7 @@ jobs:
 
     - name: Lint code
       run: |
-        flake8 . --ignore=E501,F401,W293
+        flake8 . --ignore=E501,F401,W293,W503
 
     - name: Run unit tests
       run: |
