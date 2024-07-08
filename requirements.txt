@@ -1,0 +1,7 @@
+streamlit
+requests
+black
+flake8
+pytest
+pytest-cov
+hadolint

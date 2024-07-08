@@ -150,4 +150,3 @@ with col2:
             # Clear the input box and rerun to update the chat
             st.experimental_rerun()
 
-# You could add more Streamlit components here as needed
