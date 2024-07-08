@@ -36,7 +36,7 @@ jobs:
 
     - name: Lint code
       run: |
-        flake8 . --ignore=E501,F401,W293,W503
+        flake8 . --ignore=E501,F401,W293,W503,DL3013,DL3042
 
     # - name: Run unit tests
     #   run: |
