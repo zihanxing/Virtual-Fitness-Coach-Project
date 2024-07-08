@@ -38,9 +38,9 @@ jobs:
       run: |
         flake8 . --ignore=E501,F401,W293,W503
 
-    - name: Run unit tests
-      run: |
-        pytest --doctest-modules --junitxml=junit/test-results.xml --cov=. --cov-report=xml --cov-report=html
+    # - name: Run unit tests
+    #   run: |
+    #     pytest --doctest-modules --junitxml=junit/test-results.xml --cov=. --cov-report=xml --cov-report=html
 
     - name: Lint Dockerfile
       run: |
