@@ -6,4 +6,5 @@ pytest
 pytest-cov
 docker
 pandas
-llama_index
+llama-index
+openpyxl
