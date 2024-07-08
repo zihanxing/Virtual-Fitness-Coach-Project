@@ -36,7 +36,7 @@ jobs:
 
     - name: Lint code
       run: |
-        flake8 . --ignore=E501,F401,W293,W503,DL3013,DL3042
+        flake8 . --ignore=E501,F401,W293,W503
 
     # - name: Run unit tests
     #   run: |
@@ -44,7 +44,7 @@ jobs:
 
     - name: Lint Dockerfile
       run: |
-        hadolint Dockerfile
+        hadolint Dockerfile --ignore=DL3013 --ignore=DL3042
 
     - name: Build Docker image
       run: |
