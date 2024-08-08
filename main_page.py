@@ -1,45 +1,72 @@
 import streamlit as st
-import requests
-import json
+from langchain.prompts import PromptTemplate
+from langchain.chains import LLMChain
+from langchain.memory import ConversationBufferMemory
+from langchain_community.llms.llamafile import Llamafile
+from langchain_community.embeddings import LlamafileEmbeddings
+from langchain_chroma import Chroma
+import chromadb
+import asyncio
 
-# Function to get LLM response
-def get_llm_response(user_input, context, profile):
-    # Construct a prompt that includes the user's profile and context
-    prompt = f"""You are an AI fitness coach. The user has the following profile:
-    Name: {profile['name']}
-    Age: {profile['age']}
-    Fitness Level: {profile['fitness_level']}
-    Fitness Goals: {', '.join(profile['fitness_goals'])}
+embeddings = LlamafileEmbeddings()
+persistent_client = chromadb.PersistentClient("./chroma_langchain_db")
+vector_store_from_client = Chroma(
+    client=persistent_client,
+    collection_name="v_db",
+    embedding_function=embeddings,
+)
 
-    The user's query is related to {context}.
-    
-    User Query: {user_input}
+# Initialize the local LLM
+llm = Llamafile()
 
-    Provide a personalized response based on the user's profile and query. Be encouraging and specific in your advice."""
+# Function to get LLM response using LangChain with chat history
+async def get_llm_response(user_input, context, profile, memory):
+    # Retrieve relevant information from Chroma DB
+    retrieved_docs = vector_store_from_client.similarity_search(user_input, k=3)
+    retrieved_info = "\n".join([doc.page_content for doc in retrieved_docs])
 
-    # API call to the local LLM server
-    try:
-        response = requests.post('http://localhost:8080/completion', 
-                                 json={
-                                     "prompt": prompt,
-                                     "n_predict": 200,
-                                     "temperature": 0.7,
-                                     "stop": ["User Query:"]  # Stop generation at the next user query
-                                 })
+    # Create a prompt template
+    prompt_template = PromptTemplate(
+        input_variables=["name", "age", "fitness_level", "fitness_goals", "context", "chat_history", "user_input", "retrieved_info"],
+        template="""You are an fitness coach. The user has the following profile:
+        Name: {name}
+        Age: {age}
+        Fitness Level: {fitness_level}
+        Fitness Goals: {fitness_goals}
         
-        if response.status_code == 200:
-            llm_response = response.json()['content'].strip()
-            return llm_response
-        else:
-            return f"Error: Unable to get response from LLM server. Status code: {response.status_code}"
-    except requests.exceptions.RequestException as e:
-        return f"Error: Unable to connect to LLM server. {str(e)}"
+        Chat History:
+        {chat_history}
 
+        Relevant Information:
+        {retrieved_info}
+        
+        User Query: {user_input}
+
+        Provide a personalized response directly to the user based on all the information (with YouTube links if it is provided above). Be encouraging and specific in your advice."""
+    )
+
+    # Create a LangChain with memory
+    chain = LLMChain(llm=llm, prompt=prompt_template, memory=memory)
+
+    # Prepare the input dictionary
+    chain_input = {
+        "name": profile['name'],
+        "age": profile['age'],
+        "fitness_level": profile['fitness_level'],
+        "fitness_goals": ", ".join(profile['fitness_goals']),
+        "context": context,
+        "user_input": user_input,
+        "retrieved_info": retrieved_info
+    }
+
+    # Generate response using astream
+    async for chunk in chain.astream(input=chain_input):
+        yield chunk["text"]
 
 # Set page config
 st.set_page_config(layout="wide", page_title="Virtual Fitness Coach")
 
-# Custom CSS to inject (updated for scrollable chat)
+# Custom CSS (unchanged)
 st.markdown("""
 <style>
     .profile-container {
@@ -109,21 +136,22 @@ with col1:
         st.success("Profile updated successfully!")
     st.markdown('</div>', unsafe_allow_html=True)
 
+
 with col2:
     st.write(f"Welcome to your personal AI fitness coach, {st.session_state.profile['name']}! Ask me about workouts, nutrition, or motivation.")
 
-    # Initialize chat history
+    # Initialize chat history and memory
     if "messages" not in st.session_state:
         st.session_state.messages = []
+    if "memory" not in st.session_state:
+        st.session_state.memory = ConversationBufferMemory(memory_key="chat_history", input_key="user_input")
 
     # Display chat messages from history on app rerun
     chat_container = st.container()
     with chat_container:
-        # st.markdown('<div class="chat-container">', unsafe_allow_html=True)
         for message in st.session_state.messages:
             bubble_class = "user-bubble" if message["role"] == "user" else "assistant-bubble"
             st.markdown(f'<div class="chat-bubble {bubble_class}">{message["content"]}</div>', unsafe_allow_html=True)
-        st.markdown('</div>', unsafe_allow_html=True)
 
     # User input
     user_input = st.text_input("What would you like help with?")
@@ -142,11 +170,23 @@ with col2:
             elif "motivat" in user_input.lower() or "inspir" in user_input.lower():
                 context = "fitness motivation"
 
-            response = get_llm_response(user_input, context, st.session_state.profile)
+            # Create a placeholder for the assistant's response
+            response_placeholder = st.empty()
             
-            # Add assistant response to chat history
-            st.session_state.messages.append({"role": "assistant", "content": response})
+            # Use a list to store the full response
+            full_response = [""]
+
+            # Use asyncio to run the asynchronous function
+            async def generate_response():
+                async for chunk in get_llm_response(user_input, context, st.session_state.profile, st.session_state.memory):
+                    full_response[0] += chunk
+                    response_placeholder.markdown(f'<div class="chat-bubble assistant-bubble">{full_response[0]}</div>', unsafe_allow_html=True)
+
+            # Run the asynchronous function
+            asyncio.run(generate_response())
+
+            # Add the full response to chat history
+            st.session_state.messages.append({"role": "assistant", "content": full_response[0]})
 
             # Clear the input box and rerun to update the chat
-            st.experimental_rerun()
-
+            st.rerun()

@@ -8,3 +8,5 @@ docker
 pandas
 llama-index
 openpyxl
+llama-index-vector-stores-chroma
+llama-index-embeddings-huggingface
