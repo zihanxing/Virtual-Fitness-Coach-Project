@@ -9,17 +9,14 @@ Individual Project for AIPI 561: LLMOps
 
 1. [Project Purpose](#project-purpose)
 2. [Architecture Diagram](#architecture-diagram)
+3. [Project Structure](#project-structure)
 3. [Setup Instructions](#setup-instructions)
 4. [Running the Application](#running-the-application)
-5. [Testing the Application](#testing-the-application)
 6. [Examples and Screenshots](#examples-and-screenshots)
 7. [Performance Evaluation](#performance-evaluation)
 8. [Unit Tests](#unit-tests)
 9. [CI/CD Pipeline](#cicd-pipeline)
 10. [Model Selection](#model-selection)
-11. [Frontend/UI](#frontendui)
-12. [Code Quality](#code-quality)
-13. [Bonus Points](#bonus-points)
 14. [Demo Video](#demo-video)
 
 ## Project Purpose
@@ -28,6 +25,25 @@ The Virtual Fitness Coach project aims to provide personalized fitness coaching 
 
 ## Architecture Diagram
 ![Architecture Diagram](assets/AIPI561.png)
+
+## Project Structure
+```plaintext
+.
+├── Dockerfile
+├── README.md
+├── assets
+├── chroma_langchain_db   # Persistent storage for functional database
+│   └── chroma.sqlite3
+├── data
+├── load_test.py         # Load testing script
+├── main_page.py        # Main application file to run the service
+├── performance_test.py # Performance testing script
+├── requirements.txt
+├── tests              # Unit tests
+│   ├── __init__.py
+│   └── test_main_page.py
+└── vector_database_setup.py # Setup file for the vector database
+```
 
 ## Setup Instructions
 
@@ -76,13 +92,6 @@ The Virtual Fitness Coach project aims to provide personalized fitness coaching 
    ```
 
 3. Access the application at `http://localhost:8000`.
-
-## Testing the Application
-
-To run the tests, execute the following command:
-```bash
-pytest tests/
-```
 
 ## Examples and Screenshots
 
