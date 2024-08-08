@@ -3,7 +3,7 @@
 Individual Project for AIPI 561: LLMOps
 
 ![CI/CD Status](https://github.com/zihanxing/Virtual-Fitness-Coach-Project/actions/workflows/ci.yml/badge.svg)
-
+ 
 ## Project Plan and Timeline
 
 ### Problem Statement
