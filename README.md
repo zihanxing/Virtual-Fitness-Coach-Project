@@ -1,7 +1,5 @@
 
-# Virtual Fitness Coach Project
-
-Individual Project for AIPI 561: LLMOps
+# Virtual Fitness Coach
 
 ![CI/CD Status](https://github.com/zihanxing/Virtual-Fitness-Coach-Project/actions/workflows/ci.yml/badge.svg)
 
@@ -189,6 +187,4 @@ The CI/CD pipeline is implemented using GitHub Actions and includes the followin
 ## Model Selection
 
 The application uses the Mozilla Mistral-7B-Instruct-v0.2 model to generate workout plans and instructions for users. It is the smallest model available that provides the necessary functionality for the Virtual Fitness Coach application, while maintaining a decent output speed and performance (compared to Meta-Llama-3.1-8B-Instruct and larger models).
-
-## Demo Video
 
