@@ -8,20 +8,27 @@ Individual Project for AIPI 561: LLMOps
 ## Table of Contents
 
 1. [Project Purpose](#project-purpose)
-2. [Architecture Diagram](#architecture-diagram)
-3. [Project Structure](#project-structure)
-3. [Setup Instructions](#setup-instructions)
-4. [Running the Application](#running-the-application)
-6. [Examples and Screenshots](#examples-and-screenshots)
-7. [Performance Evaluation](#performance-evaluation)
-8. [Unit Tests](#unit-tests)
-9. [CI/CD Pipeline](#cicd-pipeline)
-10. [Model Selection](#model-selection)
-14. [Demo Video](#demo-video)
+2. [Demo Video](#demo-video)
+3. [Architecture Diagram](#architecture-diagram)
+4. [Project Structure](#project-structure)
+5. [Setup Instructions](#setup-instructions)
+6. [Running the Application](#running-the-application)
+7. [Examples and Screenshots](#examples-and-screenshots)
+8. [Performance Evaluation](#performance-evaluation)
+9. [Unit Tests](#unit-tests)
+10. [CI/CD Pipeline](#cicd-pipeline)
+11. [Model Selection](#model-selection)
+
 
 ## Project Purpose
 
 The Virtual Fitness Coach project aims to provide personalized fitness coaching using an local LLM based on llamafile. The application allows users to interact with the virtual coach, receive tailored workout plans with detailed demonstration guides (including videos), based on their fitness goals and preferences. The project leverages the Mozilla Mistral-7B-Instruct-v0.2 model to generate workout plans and instructions for users.
+
+## Demo Video
+
+Please click to view the demo video: [Demo Video](assets/AIPI561_demo.mp4)
+
+Or you can find in under the assets folder.
 
 ## Architecture Diagram
 ![Architecture Diagram](assets/AIPI561.png)
