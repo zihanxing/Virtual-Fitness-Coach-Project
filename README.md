@@ -82,8 +82,6 @@ pytest tests/
 
 ### Screenshots
 
-![Screenshot 1](path_to_screenshot1.png)
-![Screenshot 2](path_to_screenshot2.png)
 
 ## Performance Evaluation
 
