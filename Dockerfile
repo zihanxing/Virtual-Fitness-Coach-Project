@@ -19,4 +19,4 @@ EXPOSE 8080
 EXPOSE 8501
 
 # Run the LLM service in the background
-CMD ["sh", "-c", "./mistral-7b-instruct-v0.2.Q4_K_M.llamafile --server --nobrowser --embedding --port 8080 & streamlit run main_page.py --server.port 8501 --server.address 0.0.0.0"]
+CMD ["sh", "-c", "streamlit run main_page.py --server.port 8501 --server.address 0.0.0.0"]

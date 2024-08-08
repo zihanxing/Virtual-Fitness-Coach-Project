@@ -1,4 +1,7 @@
-streamlit
+streamlit==1.37.1
+langchain==0.2.12
+langchain-community==0.2.11
+langchain-chroma==0.1.2
 requests
 black
 flake8
@@ -6,7 +9,5 @@ pytest
 pytest-cov
 docker
 pandas
-llama-index
 openpyxl
-llama-index-vector-stores-chroma
-llama-index-embeddings-huggingface
+
